@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计算机网络 第三章复习提纲</title>
+<style>
+  :root {
+    --primary: #1a6fb5;
+    --primary-light: #e8f2fa;
+    --accent: #d35400;
+    --text: #2c3e50;
+    --bg: #fafbfc;
+    --card: #ffffff;
+    --border: #dde4ea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 16px 14px 60px; }
+  header {
+    background: linear-gradient(135deg, #1a6fb5, #2c8fd8);
+    color: #fff;
+    padding: 28px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  header h1 { margin: 0 0 8px; font-size: 1.5em; }
+  header p { margin: 4px 0; font-size: 0.88em; opacity: 0.92; }
+  h2 {
+    font-size: 1.25em;
+    color: var(--primary);
+    border-left: 5px solid var(--primary);
+    padding: 6px 12px;
+    background: var(--primary-light);
+    border-radius: 0 8px 8px 0;
+    margin: 32px 0 14px;
+  }
+  h3 {
+    font-size: 1.08em;
+    color: var(--text);
+    margin: 22px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border);
+  }
+  h4 { font-size: 1em; margin: 16px 0 8px; color: var(--primary); }
+  p { margin: 8px 0; }
+  ul, ol { padding-left: 1.4em; margin: 8px 0; }
+  li { margin: 4px 0; }
+  .star { color: var(--accent); font-weight: bold; }
+  .tip {
+    background: #fff8e6;
+    border-left: 4px solid #f0b429;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  .formula {
+    background: var(--primary-light);
+    border: 1px solid #c2dcf0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 1.05em;
+    font-weight: 600;
+    color: var(--primary);
+    overflow-x: auto;
+  }
+  .formula sub, td sub, li sub, p sub { font-size: 0.72em; }
+  sup { font-size: 0.72em; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.9em;
+    display: block;
+    overflow-x: auto;
+    white-space: normal;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    min-width: 70px;
+  }
+  th { background: var(--primary-light); color: var(--primary); white-space: nowrap; }
+  tr:nth-child(even) td { background: #f5f8fb; }
+  code, .mono {
+    font-family: "SF Mono", Consolas, Menlo, monospace;
+    background: #eef1f4;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  pre {
+    background: #2d3743;
+    color: #e8edf2;
+    padding: 14px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.6;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+  }
+  .toc strong { color: var(--primary); }
+  .toc ol { margin: 6px 0 0; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:active { color: var(--primary); }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.82em;
+    color: #8a99a8;
+  }
+  @media print {
+    body { background: #fff; }
+    header { border-radius: 0; }
+    .toc { page-break-after: always; }
+    h2 { page-break-after: avoid; }
+    table, .formula, .tip { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>计算机网络 · 第三章「传输层」零基础复习提纲</h1>
+  <p>教材：Computer Networking: A Top-Down Approach 第 8 版（Kurose &amp; Ross）</p>
+  <p>考点：复用与解复用、可靠数据传输（rdt，不考状态机）、UDP、TCP、TCP 拥塞控制</p>
+  <p>对应课件：6-8.第三章.pdf　|　★ 标记 = 必背 / 常考</p>
+</header>
+
+<nav class="toc">
+  <strong>目录</strong>
+  <ol start="0">
+    <li><a href="#s0">传输层概述（铺垫）</a></li>
+    <li><a href="#s1">多路复用与多路分解</a></li>
+    <li><a href="#s2">无连接传输：UDP</a></li>
+    <li><a href="#s3">可靠数据传输原理（rdt）</a></li>
+    <li><a href="#s4">面向连接的传输：TCP</a></li>
+    <li><a href="#s5">拥塞控制原理</a></li>
+    <li><a href="#s6">TCP 拥塞控制</a></li>
+    <li><a href="#s7">传输层功能的演进 / QUIC</a></li>
+    <li><a href="#s8">易考点速记表</a></li>
+  </ol>
+</nav>
+
+<h2 id="s0">〇、传输层概述（铺垫）</h2>
+<div class="tip">通俗类比（课件原例）：Ann 家 12 个孩子给 Bill 家 12 个孩子写信。主机 = 房屋，进程 = 孩子，应用消息 = 信件，<b>传输层协议 = Ann 和 Bill（负责把信分发给家里的兄弟姐妹）</b>，网络层协议 = 邮政服务。</div>
+<ul>
+  <li><b>网络层</b>：提供<b>主机之间</b>的逻辑通信；</li>
+  <li><b>传输层</b>：提供<b>进程之间</b>的逻辑通信（依靠并增强网络层服务）<span class="star">★必背辨析</span>；</li>
+  <li>传输协议运行在<b>端系统</b>中：发送方把应用消息分成<b>报文段（segment）</b>交给网络层；接收方把报文段重组成消息交给应用层；</li>
+  <li>两大传输协议：
+    <ul>
+      <li><b>TCP</b>：可靠、有序传输；拥塞控制、流量控制、连接建立；</li>
+      <li><b>UDP</b>：不可靠、无序交付；是"尽力而为" IP 的简单扩展；</li>
+      <li>二者都<b>不提供</b>：延迟保证、带宽保证。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="s1">一、多路复用与多路分解（multiplexing / demultiplexing）</h2>
+<div class="tip">通俗理解：一台主机同时跑着微信、浏览器、游戏，网卡收到一堆数据，怎么知道哪个包给哪个应用？靠传输层"分拣"——这就是复用/分解。</div>
+
+<h3>1.1 定义 <span class="star">★必背</span></h3>
+<ul>
+  <li><b>多路复用（发送方）</b>：处理来自多个套接字的数据，<b>添加传输层头部</b>（头部信息稍后用于分解）；</li>
+  <li><b>多路分解（接收方）</b>：<b>使用传输层头部信息</b>将收到的报文段<b>送到正确的套接字</b>。</li>
+</ul>
+
+<h3>1.2 分解怎么工作</h3>
+<ul>
+  <li>主机收到 IP 数据报：每个数据报有<b>源 IP、目的 IP</b>，携带一个传输层报文段；报文段中有<b>源端口号、目的端口号</b>；</li>
+  <li>主机用 <b>IP 地址 + 端口号</b>把报文段定向到正确的套接字。</li>
+</ul>
+
+<h3>1.3 无连接分解（UDP）vs 面向连接分解（TCP）<span class="star">★必考辨析</span></h3>
+<table>
+  <tr><th></th><th>UDP（无连接）</th><th>TCP（面向连接）</th></tr>
+  <tr><td>套接字标识</td><td><b>二元组：(目的 IP, 目的端口)</b></td><td><b>四元组：(源 IP, 源端口, 目的 IP, 目的端口)</b></td></tr>
+  <tr><td>分解依据</td><td><b>仅目的端口号</b></td><td>全部四个值</td></tr>
+  <tr><td>结果</td><td>目的端口相同但源不同的数据报 → <b>进同一个套接字</b></td><td>四元组不同 → 进<b>不同</b>套接字；服务器可同时支持多个 TCP 套接字（每个对应一个客户端）</td></tr>
+</table>
+<p>例：三个报文段目的 IP 都是 B、目的端口都是 80，但源 IP/端口不同 → TCP 下被分解到<b>三个不同</b>的套接字。</p>
+
+<h2 id="s2">二、无连接传输：UDP</h2>
+
+<h3>2.1 UDP 特点 <span class="star">★必背</span></h3>
+<ul>
+  <li>"简化版/基础版"传输协议，<b>尽力而为（best effort）</b>服务，报文段可能<b>丢失</b>、<b>乱序</b>交付；</li>
+  <li><b>无连接</b>：无握手（省 1 个 RTT），每个 UDP 段独立处理；</li>
+  <li>发送者和接收者之间<b>没有连接状态</b>；</li>
+  <li><b>头部小</b>（仅 8 字节）；</li>
+  <li><b>没有拥塞控制</b>：可以尽可能快地发送；拥塞时仍能工作。</li>
+</ul>
+
+<h3>2.2 为什么要有 UDP？/ 使用场景 <span class="star">★常考简答</span></h3>
+<ul>
+  <li>无需建立连接（减少 RTT 延迟）、简单、头部开销小、不限速；</li>
+  <li>场景：<b>流媒体</b>（容忍丢失、对速率敏感）、<b>DNS</b>、<b>SNMP</b>、<b>HTTP/3</b>；</li>
+  <li>若需要在 UDP 上实现可靠传输：<b>在应用层添加可靠性和拥塞控制</b>（HTTP/3 就是这样做的）。</li>
+</ul>
+
+<h3>2.3 UDP 段格式 <span class="star">★</span></h3>
+<p>头部只有 4 个字段、共 8 字节：<b>源端口号、目的端口号、长度（含头部的段长，字节）、校验和</b> + 应用数据（有效载荷）。</p>
+
+<h3>2.4 UDP 校验和 <span class="star">★含计算</span></h3>
+<ul>
+  <li>目标：检测传输中的<b>位错误（位翻转）</b>；</li>
+  <li>发送方：把 UDP 段内容（含头部字段和 IP 地址）视作一串 <b>16 位整数</b>，求<b>反码和（加法时最高位的进位要"回绕"加到结果上）</b>，结果取反放入校验和字段；</li>
+  <li>接收方：重新计算并与校验和字段比较——不等 → 检测到错误；相等 → 未检测到错误，<b>但仍可能有错</b>（弱保护：多个位同时翻转可能校验和不变）<span class="star">★</span>。</li>
+</ul>
+
+<h2 id="s3">三、可靠数据传输原理（rdt）<span class="star">★不考状态机，考机制思想</span></h2>
+<div class="tip">通俗理解：网络这条"信道"不可靠——会出错、会丢包。可靠传输协议（rdt）就是在不可靠信道上"打补丁"，逐步加机制：校验和 → 确认 → 序号 → 定时器 → 流水线。考试不要求画/读状态机，但要懂每一版<b>解决什么问题、用什么机制</b>。</div>
+
+<h3>3.1 渐进式设计思路 <span class="star">★核心必背</span></h3>
+<table>
+  <tr><th>版本</th><th>信道假设</th><th>新增机制</th></tr>
+  <tr><td>rdt1.0</td><td>完全可靠（无错、无丢包）</td><td>什么都不用做，直接发</td></tr>
+  <tr><td>rdt2.0</td><td>可能<b>位错误</b></td><td><b>校验和</b>检错 + <b>ACK</b>（收对了）/<b>NAK</b>（收错了），收到 NAK 重传——"停止-等待"</td></tr>
+  <tr><td>rdt2.1</td><td>ACK/NAK 本身也可能损坏</td><td><b>序列号（0 和 1 即可）</b>：ACK/NAK 损坏就重传当前分组，接收方靠序号<b>丢弃重复分组</b></td></tr>
+  <tr><td>rdt2.2</td><td>同 2.1</td><td><b>无 NAK</b>：接收方只发 ACK，但 ACK 必须<b>带上被确认分组的序号</b>；发送方收到<b>重复 ACK</b> 就重传（TCP 采用此思路）</td></tr>
+  <tr><td>rdt3.0</td><td>还会<b>丢包</b>（数据或 ACK 都可能丢）</td><td><b>倒计时定时器（超时重传）</b>：等"合理"时间没收到 ACK 就重发；若只是延迟而非丢失，重传产生重复——序号已能处理</td></tr>
+</table>
+<div class="formula" style="font-weight:normal;">记忆口诀：检错靠校验和，反馈靠 ACK，去重靠序号，丢包靠超时</div>
+
+<h3>3.2 rdt2.0 为何有致命缺陷？<span class="star">★</span></h3>
+<p>如果 ACK/NAK 本身损坏，发送方不知道接收方的情况；不能盲目重传——会产生<b>重复分组</b>。解决：加<b>序列号</b>，接收方丢弃重复。</p>
+
+<h3>3.3 停止-等待协议的性能问题 <span class="star">★经典计算</span></h3>
+<ul>
+  <li><b>停止-等待</b>：发一个分组，等到确认再发下一个；</li>
+  <li>课件例子：1 Gbps 链路、单向 15 ms（RTT 30ms）、8000 bit 分组：
+    <ul>
+      <li>d<sub>传输</sub> = L/R = 8000/10⁹ = <b>8 μs（0.008 ms）</b>；</li>
+      <li>U = 0.008 / (30 + 0.008) ≈ <b>0.00027</b>——协议把千兆链路用成了"龟速"，<b>协议限制了物理资源的性能</b>！</li>
+    </ul>
+  </li>
+</ul>
+<div class="formula">U<sub>发送者</sub> = (L/R) ÷ (RTT + L/R)</div>
+
+<h3>3.4 流水线（pipelining）<span class="star">★</span></h3>
+<ul>
+  <li>发送方允许<b>多个"在途"（已发送、未确认）</b>的分组；</li>
+  <li>代价：序列号范围要增大、发送方和/或接收方要<b>缓冲</b>；</li>
+  <li>效果：3 个分组流水线 → 利用率提升 3 倍（3L/R ÷ (RTT + L/R)）。</li>
+</ul>
+
+<h3>3.5 两种流水线协议：GBN vs SR <span class="star">★必考对比</span></h3>
+<h4>回退 N 帧（Go-Back-N，GBN）</h4>
+<ul>
+  <li>发送方：窗口最多 <b>N</b> 个已发送未确认分组；<b>累积确认 ACK(n)</b>——确认<b>直到 n（含 n）的所有</b>分组；只为<b>最旧的在途分组</b>设一个定时器；<b>超时(n)：重传 n 及窗口内所有更高序号的分组</b>（"回退"）；</li>
+  <li>接收方：只发<b>按序到达的最高序号</b>的 ACK（可能产生重复 ACK）；<b>乱序分组：可丢弃</b>（也可缓冲，实现决定），并重发最高按序 ACK；只需记住 rcv_base。</li>
+</ul>
+<h4>选择性重传（Selective Repeat，SR）</h4>
+<ul>
+  <li>接收方：<b>逐个确认</b>所有正确收到的分组；<b>缓冲乱序分组</b>，等补齐后按序交付上层；</li>
+  <li>发送方：为<b>每个</b>未确认分组单独维护定时器；超时只重传<b>那一个</b>分组；</li>
+  <li>窗口：N 个连续序号，限制在途分组。</li>
+</ul>
+<table>
+  <tr><th></th><th>GBN</th><th>SR</th></tr>
+  <tr><td>确认方式</td><td>累积确认</td><td>逐个（独立）确认</td></tr>
+  <tr><td>定时器</td><td>1 个（最旧未确认分组）</td><td>每个未确认分组 1 个</td></tr>
+  <tr><td>超时重传</td><td>重传 n 及之后所有</td><td>只重传超时的那一个</td></tr>
+  <tr><td>接收方乱序处理</td><td>通常丢弃 + 重发旧 ACK</td><td>缓冲</td></tr>
+</table>
+
+<h3>3.6 SR 的窗口大小困境 <span class="star">★常考结论</span></h3>
+<p>序号空间有限时（如 0,1,2,3），若窗口太大，接收方<b>无法区分"新分组"和"旧分组的重传"</b>（两种场景下接收方行为完全相同但结果一个对一个错）。</p>
+<div class="formula">发送窗口 + 接收窗口 ≤ 2ⁿ（n 为序号位数），且通常发送窗口 = 接收窗口</div>
+<p>课件扩展例（协议 6）：n=3（序号 0~7），若 W<sub>T</sub>=W<sub>R</sub>=7，ACK 丢失后窗口调整前后<b>有效序号重叠</b>，会把重传的旧帧当新帧收下 → 协议失败；所以 W<sub>T</sub>=W<sub>R</sub>=4 才安全。</p>
+
+<h2 id="s4">四、面向连接的传输：TCP</h2>
+
+<h3>4.1 TCP 概述 <span class="star">★必背特性清单</span></h3>
+<ul>
+  <li><b>点对点</b>：一个发送方、一个接收方；</li>
+  <li><b>可靠、有序的字节流</b>：无"消息边界"；</li>
+  <li><b>全双工</b>：同一连接双向数据流；<b>MSS</b>：最大段大小；</li>
+  <li><b>面向连接</b>：数据交换前先<b>握手</b>（初始化双方状态）；</li>
+  <li><b>流水线</b> + <b>累积确认</b>：窗口大小由拥塞控制和流量控制共同决定；</li>
+  <li><b>流量控制</b>：发送方不压垮接收方。</li>
+</ul>
+
+<h3>4.2 TCP 段结构 <span class="star">★</span></h3>
+<p>32 位一行：<b>源端口 + 目的端口</b> → <b>序列号</b> → <b>确认号</b> → 头部长度 + 标志位（<b>C、E</b>：拥塞通知；<b>RST、SYN、FIN</b>：连接管理；ACK 位）+ <b>接收窗口（rwnd，流量控制：接收方愿意接收的字节数）</b> → 校验和 + 紧急指针 → 选项 → 应用数据。</p>
+
+<h3>4.3 序列号与确认号 <span class="star">★必考</span></h3>
+<ul>
+  <li><b>序列号</b>：段中<b>第一个数据字节</b>在字节流中的编号（<b>按字节计数，不是按段</b>）；</li>
+  <li><b>确认号</b>：<b>期望从对方收到的下一个字节</b>的序号；<b>累积确认</b>；</li>
+  <li>乱序段怎么处理？TCP 规范<b>未规定</b>，由实现者决定；</li>
+  <li>经典 telnet 例：A 发 <code>Seq=42, ACK=79, data='C'</code> → B 回 <code>Seq=79, ACK=43, data='C'</code>（确认收到 C 并回显）→ A 回 <code>Seq=43, ACK=80</code>。</li>
+</ul>
+
+<h3>4.4 RTT 估计与超时设置 <span class="star">★公式必背</span></h3>
+<p>超时值应大于 RTT，但 RTT 是变化的：太短 → 过早超时、不必要重传；太长 → 对丢失反应迟钝。</p>
+<ul>
+  <li><b>SampleRTT</b>：从发送段到收到 ACK 的实测时间（<b>忽略重传</b>）；</li>
+  <li>平滑估计（<b>EWMA 指数加权移动平均</b>，典型 α = 0.125）；</li>
+  <li>偏差估计 DevRTT（典型 β = 0.25）。</li>
+</ul>
+<div class="formula">EstimatedRTT = (1−α)·EstimatedRTT + α·SampleRTT</div>
+<div class="formula">DevRTT = (1−β)·DevRTT + β·|SampleRTT − EstimatedRTT|</div>
+<div class="formula">TimeoutInterval = EstimatedRTT + 4·DevRTT</div>
+
+<h3>4.5 TCP 可靠传输机制（发送方/接收方行为）<span class="star">★</span></h3>
+<p><b>发送方三事件：</b></p>
+<ol>
+  <li><b>收到应用数据</b>：创建段（序号 = 第一个字节的流编号），定时器没开就开（针对最旧未确认段）；</li>
+  <li><b>超时</b>：重传<b>导致超时的段</b>，重启定时器；</li>
+  <li><b>收到 ACK</b>：若确认了新数据，更新 SendBase；仍有未确认段则重启定时器。</li>
+</ol>
+<p><b>接收方 ACK 生成规则（RFC 5681）</b><span class="star">★常考表</span></p>
+<table>
+  <tr><th>接收端事件</th><th>接收方动作</th></tr>
+  <tr><td>按序段到达，且之前都已确认</td><td><b>延迟 ACK</b>：最多等 500ms 看有无下一段，没有就发 ACK</td></tr>
+  <tr><td>按序段到达，且有另一段等待确认</td><td><b>立即发送单个累积 ACK</b>（一次确认两个段）</td></tr>
+  <tr><td><b>乱序</b>段到达（序号高于期望，检测到间隙）</td><td><b>立即发重复 ACK</b>，指明期望的下一个字节</td></tr>
+  <tr><td>到达的段部分/完全<b>填补间隙</b></td><td>若段从间隙低端开始，<b>立即发 ACK</b></td></tr>
+</table>
+
+<h3>4.6 快速重传 <span class="star">★必背</span></h3>
+<p>收到 <b>3 个重复 ACK</b>（即同一数据的第 4 个 ACK）→ 说明该段很可能丢了 → <b>不等超时，立即重传</b>最小序号的未确认段。</p>
+
+<h3>4.7 TCP 流量控制 <span class="star">★必背、勿与拥塞控制混淆</span></h3>
+<ul>
+  <li>问题：网络层交付数据比应用层从套接字缓冲区取数据<b>快</b> → 接收缓冲区会溢出；</li>
+  <li>机制：接收方在 TCP 头部的 <b>rwnd 字段</b>中"通告"<b>空闲缓冲区空间</b>（RcvBuffer 默认约 4096 字节，许多 OS 自动调整）；</li>
+  <li>发送方限制<b>在途（未确认）数据量 ≤ rwnd</b>，保证接收缓冲区不溢出；</li>
+  <li>一句话：<b>接收方控制发送方</b>，别发太多太快。</li>
+</ul>
+
+<h3>4.8 TCP 连接管理 <span class="star">★必考</span></h3>
+<h4>为什么两次握手不行？<span class="star">★</span></h4>
+<ul>
+  <li>网络中有可变延迟、消息重传（如 req_conn 重传）、乱序，双方"看不见"对方；</li>
+  <li>两次握手的失败场景：① <b>半开连接</b>（客户端已结束，服务器还傻等）；② <b>重复数据被当成新数据接收</b>。</li>
+</ul>
+<h4>三次握手（必背流程）</h4>
+<ol>
+  <li>客户端发 <b>SYN</b>（SYNbit=1，Seq=x），状态 SYNSENT；</li>
+  <li>服务器回 <b>SYNACK</b>（SYNbit=1，Seq=y，ACKnum=x+1），状态 SYN RCVD——"服务器活着"；</li>
+  <li>客户端回 <b>ACK</b>（ACKnum=y+1），可携带数据，双方进入 <b>ESTAB</b>——"客户端活着"。</li>
+</ol>
+<div class="tip">人类版三次握手："完成了吗？""已完成。""开始爬。"</div>
+<h4>关闭连接（四次挥手）</h4>
+<ul>
+  <li>双方各自关闭自己一端：发送 <b>FIN=1</b> 的段，对收到的 FIN 回 ACK（ACK 可与自己的 FIN 合并）；可处理同时 FIN；</li>
+  <li>客户端最后进入 <b>TIMED_WAIT</b>（等 2 倍最大段生存期）再 CLOSED。</li>
+</ul>
+
+<h2 id="s5">五、拥塞控制原理</h2>
+
+<h3>5.1 什么是拥塞 <span class="star">★必背</span></h3>
+<ul>
+  <li>非正式定义：<b>太多源以过快速度发送过多数据，超出网络处理能力</b>；</li>
+  <li>表现：<b>长延迟</b>（路由器缓冲区排队）、<b>丢包</b>（缓冲区溢出）。</li>
+</ul>
+<div class="tip"><span class="star">★必考区别</span>：<b>拥塞控制</b>＝<b>太多发送者</b>发太快 → 保护<b>网络</b>；<b>流量控制</b>＝<b>一个发送者</b>对<b>一个接收者</b>太快 → 保护<b>接收方缓冲区</b>。</div>
+
+<h3>5.2 拥塞的代价（三个场景的结论）<span class="star">★</span></h3>
+<ul>
+  <li>场景 1（无限缓冲）：到达率 λ<sub>in</sub> 接近链路容量 R/2 时，<b>时延急剧增大</b>；</li>
+  <li>场景 2（有限缓冲 + 重传）：<b>代价 1</b>——丢包导致重传，"过早超时"还会发<b>不必要的重复副本</b>，重传浪费容量，<b>有效吞吐量下降</b>；</li>
+  <li>场景 3（多跳路径）：<b>代价 2</b>——分组被下游丢弃时，它在<b>上游消耗的传输容量和缓冲全部白费</b>；极端时某流吞吐量趋于 0。</li>
+</ul>
+
+<h3>5.3 两类拥塞控制方法 <span class="star">★</span></h3>
+<table>
+  <tr><th></th><th>端到端拥塞控制</th><th>网络辅助拥塞控制</th></tr>
+  <tr><td>反馈来源</td><td><b>无网络显式反馈</b>，通过观察<b>丢包、延迟</b>推断拥塞</td><td><b>路由器直接提供反馈</b>（可指示拥塞级别或设置速率）</td></tr>
+  <tr><td>例子</td><td>经典 TCP</td><td>TCP ECN、ATM、DECbit</td></tr>
+</table>
+
+<h2 id="s6">六、TCP 拥塞控制</h2>
+
+<h3>6.1 AIMD（加性增、乘性减）<span class="star">★核心必背</span></h3>
+<ul>
+  <li>思路：发送方<b>逐步加速</b>直到丢包（说明拥塞），丢包时<b>降速</b>；</li>
+  <li><b>加性增（Additive Increase）</b>：每个 RTT 把发送速率（cwnd）增加 <b>1 个 MSS</b>，直到检测到丢包——"探测带宽"；</li>
+  <li><b>乘性减（Multiplicative Decrease）</b>：丢包时把速率<b>减半</b>；</li>
+  <li>图像是著名的<b>锯齿状</b>曲线；</li>
+  <li>丢包的两种处理（必背区别）：
+    <ul>
+      <li><b>3 个重复 ACK</b>（TCP <b>Reno</b>）：cwnd 减半（进快速恢复）；</li>
+      <li><b>超时</b>（TCP <b>Tahoe</b> 对所有丢包都这样）：cwnd 降到 <b>1 MSS</b>；</li>
+    </ul>
+  </li>
+  <li>为什么用 AIMD？分布式异步算法，被证明能<b>优化全网流速率</b>且有理想稳定性。</li>
+</ul>
+
+<h3>6.2 拥塞窗口 cwnd 与发送速率 <span class="star">★公式</span></h3>
+<ul>
+  <li>发送方限制：<b>LastByteSent − LastByteAcked ≤ cwnd</b>；</li>
+</ul>
+<div class="formula">TCP 速率 ≈ cwnd / RTT（字节/秒）</div>
+
+<h3>6.3 慢启动（slow start）<span class="star">★必背</span></h3>
+<ul>
+  <li>连接刚开始：cwnd = <b>1 MSS</b>，<b>每个 RTT 翻倍</b>（每收到一个 ACK 就 cwnd += MSS）→ <b>指数增长</b>；</li>
+  <li>名字叫"慢"启动，实际<b>初始慢但指数级增长</b>（并不慢）。</li>
+</ul>
+
+<h3>6.4 从慢启动到拥塞避免 <span class="star">★必背</span></h3>
+<ul>
+  <li>问：指数增长何时转为线性？答：当 cwnd 达到 <b>ssthresh</b>（上次丢包前 cwnd 值的<b>一半</b>）时；</li>
+  <li>变量 <b>ssthresh</b>：每次丢包事件发生时，<b>ssthresh = 丢包前 cwnd 的一半</b>。</li>
+</ul>
+
+<h3>6.5 拥塞控制全流程总结（不要求 FSM，记行为）<span class="star">★</span></h3>
+<table>
+  <tr><th>事件</th><th>动作</th></tr>
+  <tr><td>初始</td><td>cwnd = 1 MSS，ssthresh = 64 KB，慢启动</td></tr>
+  <tr><td>慢启动中收到新 ACK</td><td>cwnd += MSS（每 RTT 翻倍）</td></tr>
+  <tr><td>cwnd ≥ ssthresh</td><td>进入<b>拥塞避免</b>：每 RTT cwnd 增加 1 个 MSS</td></tr>
+  <tr><td><b>超时</b></td><td>ssthresh = cwnd/2；<b>cwnd = 1 MSS</b>；重传缺失段；回到慢启动</td></tr>
+  <tr><td><b>3 个重复 ACK</b>（Reno）</td><td>ssthresh = cwnd/2；<b>cwnd = ssthresh + 3</b>；重传缺失段；进入<b>快速恢复</b></td></tr>
+  <tr><td>快速恢复中收到新 ACK</td><td>cwnd = ssthresh，回到拥塞避免</td></tr>
+</table>
+
+<h3>6.6 TCP CUBIC（了解）</h3>
+<ul>
+  <li>直觉：丢包后瓶颈链路的拥塞状态可能没大变 → 减半后<b>先快速爬回 W<sub>max</sub> 附近，再缓慢谨慎逼近</b>（W 是与时间 K 距离的<b>立方函数</b>）；</li>
+  <li><b>Linux 默认</b>的 TCP 拥塞控制，流行 Web 服务器最常用。</li>
+</ul>
+
+<h3>6.7 基于延迟的拥塞控制 / BBR（了解）</h3>
+<ul>
+  <li>目标：<b>"保持管道刚好满，但不过满"</b>——瓶颈链路持续传输又不造成大排队；</li>
+  <li>方法：用 RTT<sub>min</sub>（无拥塞 RTT）算出无拥塞吞吐量 = cwnd/RTT<sub>min</sub>；实测吞吐量接近它 → 线性增 cwnd；远低于它 → 线性减；</li>
+  <li><b>不靠丢包</b>驱动；Google 内部骨干网部署 <b>BBR</b>。</li>
+</ul>
+
+<h3>6.8 TCP 吞吐量公式（了解，可能考代入）</h3>
+<div class="formula">平均 TCP 吞吐量 = (3/4)·W/RTT（字节/秒）</div>
+<ul>
+  <li>忽略慢启动，W 为丢包时窗口（窗口在 W/2 和 W 之间锯齿，平均 3W/4）；</li>
+  <li>长肥管道公式 [Mathis 1997]：<b>吞吐量 = 1.22·MSS / (RTT·√L)</b>（L 为丢包率）——10 Gbps 需要 L ≈ 2×10⁻¹⁰，极小！</li>
+</ul>
+
+<h3>6.9 ECN 显式拥塞通知（了解）</h3>
+<p>网络辅助式：路由器在 <b>IP 头部 ToS 字段的 2 个比特</b>标记拥塞（ECN=11）→ 接收方在 <b>TCP ACK 段设 ECE 位</b>通知发送方 → 同时涉及 IP 层和 TCP 层。</p>
+
+<h3>6.10 TCP 公平性 <span class="star">★常考结论</span></h3>
+<ul>
+  <li>目标：K 条 TCP 会话共享带宽 R 的瓶颈链路，每条平均得 <b>R/K</b>；</li>
+  <li><b>TCP 公平吗？是</b>（理想假设下：相同 RTT、固定数量会话且仅处于拥塞避免阶段）——AIMD 几何解释：加性增沿 45° 线，乘性减向原点收缩，最终收敛到平等共享线；</li>
+  <li>不公平的现实：
+    <ul>
+      <li><b>UDP</b>：多媒体应用不用 TCP、不限速，没有"互联网警察"；</li>
+      <li><b>并行 TCP 连接</b>：应用开多条连接抢带宽（链路已有 9 条连接时：新应用开 1 条得 R/10，开 11 条得 R/2）。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="s7">七、传输层功能的演进 / QUIC（了解）</h2>
+<ul>
+  <li>TCP/UDP 用了 40 年；特殊场景有特殊"风味"TCP：长肥管道、无线网络（误码丢包被 TCP 误判为拥塞）、长延迟链路、数据中心、后台流量；</li>
+  <li><b>QUIC</b>（Quick UDP Internet Connections）：<b>基于 UDP 的应用层协议</b>，HTTP/3 的底层：
+    <ul>
+      <li><b>1 次握手</b>同时建立可靠性、拥塞控制、认证、加密状态（TCP+TLS 要 2 次串行握手）；</li>
+      <li>单连接上多路复用多个应用级"流"：<b>每流独立的可靠传输</b>→ 消除队头阻塞（HOL）；</li>
+      <li>错误/拥塞控制算法与 TCP 类似。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="s8">八、易考点速记表</h2>
+
+<h3>8.1 关键公式汇总</h3>
+<table>
+  <tr><th>公式</th><th>含义</th></tr>
+  <tr><td>U = (L/R) ÷ (RTT + L/R)</td><td>停止-等待利用率（流水线 N 个 → 分子乘 N）</td></tr>
+  <tr><td>发送窗口 + 接收窗口 ≤ 2ⁿ</td><td>SR 协议窗口约束（n 为序号位数）</td></tr>
+  <tr><td>EstimatedRTT = (1−α)·EstimatedRTT + α·SampleRTT</td><td>RTT 平滑估计，α=0.125</td></tr>
+  <tr><td>DevRTT = (1−β)·DevRTT + β·|SampleRTT−EstimatedRTT|</td><td>RTT 偏差，β=0.25</td></tr>
+  <tr><td>TimeoutInterval = EstimatedRTT + 4·DevRTT</td><td>超时间隔</td></tr>
+  <tr><td>TCP 速率 ≈ cwnd/RTT</td><td>拥塞窗口决定发送速率</td></tr>
+  <tr><td>平均 TCP 吞吐量 = (3/4)·W/RTT</td><td>W 为丢包时窗口大小</td></tr>
+  <tr><td>吞吐量 = 1.22·MSS/(RTT·√L)</td><td>长肥管道公式，L 为丢包率</td></tr>
+  <tr><td>公平份额 = R/K</td><td>K 条 TCP 流共享带宽 R</td></tr>
+</table>
+
+<h3>8.2 关键数字</h3>
+<table>
+  <tr><th>项目</th><th>数值</th></tr>
+  <tr><td>UDP 头部</td><td>8 字节（4 个字段）</td></tr>
+  <tr><td>rdt 序号</td><td>停等协议只需 0 和 1</td></tr>
+  <tr><td>快速重传触发</td><td>3 个重复 ACK</td></tr>
+  <tr><td>延迟 ACK 等待</td><td>最多 500 ms</td></tr>
+  <tr><td>慢启动初始</td><td>cwnd = 1 MSS</td></tr>
+  <tr><td>超时后</td><td>cwnd = 1 MSS，ssthresh = cwnd/2</td></tr>
+  <tr><td>3 重复 ACK 后（Reno）</td><td>cwnd = ssthresh + 3</td></tr>
+  <tr><td>α / β 典型值</td><td>0.125 / 0.25</td></tr>
+  <tr><td>TIMED_WAIT</td><td>2 倍最大段生存期</td></tr>
+</table>
+
+<h3>8.3 名词中英对照</h3>
+<table>
+  <tr><th>中文</th><th>英文</th></tr>
+  <tr><td>多路复用 / 多路分解</td><td>multiplexing / demultiplexing</td></tr>
+  <tr><td>报文段</td><td>segment</td></tr>
+  <tr><td>停止-等待</td><td>stop-and-wait</td></tr>
+  <tr><td>确认 / 否定确认</td><td>ACK / NAK</td></tr>
+  <tr><td>流水线</td><td>pipelining</td></tr>
+  <tr><td>回退 N 帧 / 选择性重传</td><td>Go-Back-N (GBN) / Selective Repeat (SR)</td></tr>
+  <tr><td>累积确认</td><td>cumulative ACK</td></tr>
+  <tr><td>最大段大小</td><td>MSS (maximum segment size)</td></tr>
+  <tr><td>接收窗口 / 拥塞窗口</td><td>rwnd / cwnd</td></tr>
+  <tr><td>流量控制 / 拥塞控制</td><td>flow control / congestion control</td></tr>
+  <tr><td>三次握手</td><td>three-way handshake</td></tr>
+  <tr><td>慢启动 / 拥塞避免 / 快速恢复</td><td>slow start / congestion avoidance / fast recovery</td></tr>
+  <tr><td>快速重传</td><td>fast retransmit</td></tr>
+  <tr><td>加性增乘性减</td><td>AIMD (additive increase, multiplicative decrease)</td></tr>
+  <tr><td>显式拥塞通知</td><td>ECN (explicit congestion notification)</td></tr>
+</table>
+
+<h3>8.4 易混概念辨析</h3>
+<table>
+  <tr><th>概念对</th><th>区别一句话</th></tr>
+  <tr><td>网络层 vs 传输层</td><td>网络层：<b>主机</b>之间逻辑通信；传输层：<b>进程</b>之间逻辑通信</td></tr>
+  <tr><td>UDP 分解 vs TCP 分解</td><td>UDP 只看（目的 IP, 目的端口）二元组；TCP 看完整四元组</td></tr>
+  <tr><td>流量控制 vs 拥塞控制</td><td>流控：别压垮<b>接收方</b>（rwnd，接收方通告）；拥控：别压垮<b>网络</b>（cwnd，发送方自己推断）</td></tr>
+  <tr><td>GBN vs SR</td><td>GBN 累积确认、1 个定时器、超时全部重发、乱序丢弃；SR 独立确认、每段定时器、只重发丢的、乱序缓冲</td></tr>
+  <tr><td>超时重传 vs 快速重传</td><td>超时：定时器到期才重传；快速重传：3 个重复 ACK 提前重传，不等超时</td></tr>
+  <tr><td>Tahoe vs Reno</td><td>Tahoe：任何丢包 cwnd 都归 1；Reno：3 重复 ACK 只减半（快速恢复），超时才归 1</td></tr>
+  <tr><td>慢启动 vs 拥塞避免</td><td>慢启动：<b>指数</b>增长（每 RTT 翻倍）；拥塞避免：<b>线性</b>增长（每 RTT 加 1 MSS）；分界点 ssthresh</td></tr>
+  <tr><td>序列号 vs 确认号</td><td>序号：本段第一个字节的编号；确认号：期望对方发来的下一个字节编号（累积）</td></tr>
+  <tr><td>两次握手 vs 三次握手</td><td>两次无法应对延迟/重传/乱序 → 半开连接、重复数据；第三次 ACK 证明"客户端活着"</td></tr>
+</table>
+
+<h3>8.5 一句话带过（非重点，了解即可）</h3>
+<ul>
+  <li><b>rdt 的 FSM 状态机</b>：考点明确不考查，只需掌握 3.1 表中每一版的机制演进逻辑。</li>
+  <li><b>QUIC/HTTP3</b>：基于 UDP、1 次握手建立全部状态、多流并行消除队头阻塞。</li>
+  <li><b>CUBIC/BBR</b>：Linux 默认用 CUBIC（立方函数逼近 W<sub>max</sub>）；BBR 基于延迟、不靠丢包，Google 骨干网使用。</li>
+</ul>
+
+<footer>计算机网络 第三章复习提纲 · 基于 Kurose &amp; Ross 第 8 版课件整理</footer>
+
+</div>
+</body>
+</html>

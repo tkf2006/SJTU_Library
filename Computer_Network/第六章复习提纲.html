@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计算机网络 第六章复习提纲</title>
+<style>
+  :root {
+    --primary: #1a6fb5;
+    --primary-light: #e8f2fa;
+    --accent: #d35400;
+    --text: #2c3e50;
+    --bg: #fafbfc;
+    --card: #ffffff;
+    --border: #dde4ea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 16px 14px 60px; }
+  header {
+    background: linear-gradient(135deg, #1a6fb5, #2c8fd8);
+    color: #fff;
+    padding: 28px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  header h1 { margin: 0 0 8px; font-size: 1.5em; }
+  header p { margin: 4px 0; font-size: 0.88em; opacity: 0.92; }
+  h2 {
+    font-size: 1.25em;
+    color: var(--primary);
+    border-left: 5px solid var(--primary);
+    padding: 6px 12px;
+    background: var(--primary-light);
+    border-radius: 0 8px 8px 0;
+    margin: 32px 0 14px;
+  }
+  h3 {
+    font-size: 1.08em;
+    color: var(--text);
+    margin: 22px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border);
+  }
+  h4 { font-size: 1em; margin: 16px 0 8px; color: var(--primary); }
+  p { margin: 8px 0; }
+  ul, ol { padding-left: 1.4em; margin: 8px 0; }
+  li { margin: 4px 0; }
+  .star { color: var(--accent); font-weight: bold; }
+  .tip {
+    background: #fff8e6;
+    border-left: 4px solid #f0b429;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  .formula {
+    background: var(--primary-light);
+    border: 1px solid #c2dcf0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 1.05em;
+    font-weight: 600;
+    color: var(--primary);
+    overflow-x: auto;
+  }
+  .formula sub, td sub, li sub, p sub { font-size: 0.72em; }
+  sup { font-size: 0.72em; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.9em;
+    display: block;
+    overflow-x: auto;
+    white-space: normal;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    min-width: 70px;
+  }
+  th { background: var(--primary-light); color: var(--primary); white-space: nowrap; }
+  tr:nth-child(even) td { background: #f5f8fb; }
+  code, .mono {
+    font-family: "SF Mono", Consolas, Menlo, monospace;
+    background: #eef1f4;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  pre {
+    background: #2d3743;
+    color: #e8edf2;
+    padding: 14px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.6;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+  }
+  .toc strong { color: var(--primary); }
+  .toc ol { margin: 6px 0 0; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:active { color: var(--primary); }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.82em;
+    color: #8a99a8;
+  }
+  @media print {
+    body { background: #fff; }
+    header { border-radius: 0; }
+    .toc { page-break-after: always; }
+    h2 { page-break-after: avoid; }
+    table, .formula, .tip { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>计算机网络 · 第六章「链路层与局域网」零基础复习提纲</h1>
+  <p>教材：Computer Networking: A Top-Down Approach 第 8 版（Kurose &amp; Ross）</p>
+  <p>考点：差错检测与纠错、多址接入协议、局域网（LAN）</p>
+  <p>对应课件：12-13.第六章.pdf　|　★ 标记 = 必背 / 常考</p>
+</header>
+
+<nav class="toc">
+  <strong>目录</strong>
+  <ol start="0">
+    <li><a href="#s0">链路层概述（铺垫）</a></li>
+    <li><a href="#s1">差错检测与纠错</a></li>
+    <li><a href="#s2">多址接入协议</a></li>
+    <li><a href="#s3">局域网（LAN）</a></li>
+    <li><a href="#s4">易考点速记表</a></li>
+  </ol>
+</nav>
+
+<h2 id="s0">〇、链路层概述（铺垫）</h2>
+<div class="tip">运输类比（课件原例）：从普林斯顿到洛桑——豪华轿车（到机场）→ 飞机（到日内瓦）→ 火车（到洛桑）。<b>游客 = 数据报，运输段 = 通信链路，运输方式 = 链路层协议，旅行社 = 路由算法</b>。</div>
+
+<h3>基本术语 <span class="star">★必背</span></h3>
+<ul>
+  <li><b>节点（node）</b>：主机和路由器；</li>
+  <li><b>链路（link）</b>：连接相邻节点的通信信道（有线/无线/局域网）；</li>
+  <li><b>帧（frame）</b>：第 2 层数据包，<b>封装数据报</b>；</li>
+  <li>链路层职责：把数据报<b>从一个节点经链路传到物理相邻的节点</b>；</li>
+  <li>不同链路可以用<b>不同链路层协议</b>（如第一跳 WiFi、下一跳以太网），各自提供的服务也可能不同。</li>
+</ul>
+
+<h3>链路层服务 <span class="star">★</span></h3>
+<ol>
+  <li><b>帧封装、链路接入</b>：数据报封装成帧（加头部尾部）；共享介质时做信道接入；帧头用 <b>MAC 地址</b>标识源/目的（≠ IP 地址！）；</li>
+  <li><b>相邻节点间可靠传输</b>：低误码率链路很少用；<b>无线链路误码率高</b>才用；</li>
+  <li><b>流量控制</b>：相邻收发节点间的节奏控制；</li>
+  <li><b>差错检测</b>：信号衰减、噪声造成错误；接收方检测到错误后要求重传或丢帧；</li>
+  <li><b>差错纠正</b>：接收方<b>不靠重传</b>直接定位并纠正比特错误；</li>
+  <li><b>半双工/全双工</b>：半双工——两端都能发，但<b>不能同时</b>。</li>
+</ol>
+
+<h3>链路层在哪实现？<span class="star">★</span></h3>
+<ul>
+  <li>在<b>每台主机</b>中，实现于<b>网卡（NIC，网络接口卡）或芯片</b>上（以太网/WiFi 卡），实现链路层+物理层；经主机总线（PCI）接入；是<b>硬件、软件、固件的组合</b>；</li>
+  <li>发送端：封装成帧、加差错检测位等；接收端：检错、提取数据报上交；</li>
+  <li>补充：IEEE 802.2 <b>LLC（逻辑链路控制）</b>位于 MAC 之上，构成数据链路层的两个子层。</li>
+</ul>
+
+<h2 id="s1">一、差错检测与纠错</h2>
+
+<h3>1.1 基本框架 <span class="star">★</span></h3>
+<ul>
+  <li><b>EDC</b>：差错检测与纠正位（冗余位）；<b>D</b>：受保护的数据（可含头部字段）；</li>
+  <li>接收方收到 D' 和 EDC'，判断是否出错；</li>
+  <li><b>差错检测不是 100% 可靠的</b><span class="star">★</span>：协议可能漏掉少数错误；<b>EDC 字段越大，检测/纠正能力越强</b>。</li>
+</ul>
+
+<h3>1.2 奇偶校验 <span class="star">★必考</span></h3>
+<p><b>单比特奇偶校验：</b></p>
+<ul>
+  <li>加 1 个校验位；<b>偶校验</b>：让 1 的总个数为<b>偶数</b>；</li>
+  <li>只能<b>检测单比特（奇数个）错误</b>，不能纠正。</li>
+</ul>
+<p><b>二维奇偶校验</b> <span class="star">★</span>：</p>
+<ul>
+  <li>把数据排成 i 行 j 列，每行、每列各加一个校验位；</li>
+  <li>能<b>检测并纠正单比特错误</b>：出错行的行校验和出错列的列校验都会异常，交叉定位 → 翻转该位即纠正；</li>
+  <li>也能<b>检测</b>（但不能纠正）两比特错误。</li>
+</ul>
+
+<h3>1.3 互联网校验和（回顾第三章）</h3>
+<ul>
+  <li>把段内容当 <b>16 位整数序列</b>求<b>反码和</b>（最高位进位回绕），取反放入校验和字段；</li>
+  <li>接收方重算比对：不等 → 有错；相等 → 未检出错误，<b>但仍可能有错</b>（弱保护）。</li>
+</ul>
+
+<h3>1.4 循环冗余校验（CRC）<span class="star">★必考会算</span></h3>
+<ul>
+  <li>更强大的差错检测编码，<b>实际中广泛应用（以太网、802.11 WiFi）</b>；</li>
+  <li><b>D</b>：d 位数据（视为二进制数）；<b>G</b>：生成多项式（位模式），<b>r+1 位</b>；</li>
+  <li>目标：选 r 个 CRC 位 R，使 <b>&lt;D,R&gt; 能被 G 模 2 整除</b>；</li>
+  <li>发送 &lt;D,R&gt; = D·2<sup>r</sup> XOR R；接收方用 G 去除 &lt;D,R&gt;：<b>余数非零 → 检测到错误</b>；</li>
+  <li><b>能检测所有小于 r+1 位的突发错误</b> <span class="star">★</span>。</li>
+</ul>
+<div class="formula">R = remainder( D·2<sup>r</sup> ÷ G )　（模 2 除法 = 按位 XOR，不借位不进位）</div>
+<ul>
+  <li>课件例：D=101110，G=1001（r=3）→ D·2³ = 101110000，模 2 除以 1001 得余数 <b>011</b> → 发送 101110<b>011</b>；</li>
+  <li>帧数据 10111 → 实际传输帧 = 帧数据+余数 = 10111011；</li>
+  <li>标准生成多项式（了解）：CRC-12、CRC-16（x¹⁶+x¹⁵+x²+1）、CRC-CCITT（x¹⁶+x¹²+x⁵+1）、IEEE 802（32 位）。</li>
+</ul>
+
+<h2 id="s2">二、多址接入协议（多路访问协议）</h2>
+
+<h3>2.1 问题背景 <span class="star">★</span></h3>
+<p>两种链路：</p>
+<ul>
+  <li><b>点对点</b>：以太网交换机↔主机、拨号 PPP；</li>
+  <li><b>广播（共享介质）</b>：传统总线以太网、HFC 上行、802.11 无线、4G/5G、卫星——像"鸡尾酒会"共享空气。</li>
+</ul>
+<p><b>多址接入问题</b>：单一共享广播信道，两个以上节点<b>同时传输 → 干扰/冲突（collision）</b>；需要<b>分布式算法</b>决定谁何时发送，而且协调本身也只能用这条信道（<b>没有带外信道</b>）。</p>
+<p><b>理想的多址接入协议</b>（速率 R 的信道）<span class="star">★必背四条</span>：</p>
+<ol>
+  <li>只有一个节点要发时，它能以<b>全速率 R</b> 发送；</li>
+  <li>M 个节点要发时，每个平均得 <b>R/M</b>；</li>
+  <li><b>完全去中心化</b>：无需专门协调节点、无需时钟/时隙同步；</li>
+  <li><b>简单</b>。</li>
+</ol>
+
+<h3>2.2 三大类 MAC 协议 <span class="star">★必背</span></h3>
+<table>
+  <tr><th>类别</th><th>思想</th><th>例子</th></tr>
+  <tr><td><b>信道划分</b></td><td>把信道切成小份（时隙/频段/码片），独占分配</td><td>TDMA、FDMA</td></tr>
+  <tr><td><b>随机接入</b></td><td>不划分，允许冲突，冲突后"恢复"</td><td>ALOHA、时隙 ALOHA、CSMA、CSMA/CD、CSMA/CA</td></tr>
+  <tr><td><b>轮流</b></td><td>节点轮流用，发得多的可以用更久</td><td>轮询、令牌传递</td></tr>
+</table>
+
+<h3>2.3 信道划分：TDMA 与 FDMA <span class="star">★</span></h3>
+<ul>
+  <li><b>TDMA（时分多址）</b>：按"轮"访问，每站每轮一个<b>固定长度时隙</b>；没用的时隙<b>空闲</b>（例：6 站只有 1、3、4 要发，时隙 2、5、6 浪费）；</li>
+  <li><b>FDMA（频分多址）</b>：频谱划分<b>频带</b>，每站固定一个频带；没用的频带空闲；</li>
+  <li>共同缺点：低负载时浪费——单个节点也只能用 1/N 的资源。</li>
+</ul>
+
+<h3>2.4 随机接入：ALOHA 家族 <span class="star">★含效率数字</span></h3>
+<p><b>纯 ALOHA：</b></p>
+<ul>
+  <li>帧一到就<b>立即发送</b>，不同步；</li>
+  <li>在 t<sub>0</sub> 发送的帧会与 [t<sub>0</sub>−1, t<sub>0</sub>+1] 内发送的帧冲突 → <b>冲突危险区 = 2 个帧时</b>；</li>
+  <li><b>效率 = 1/(2e) ≈ 18%</b> <span class="star">★</span>。</li>
+</ul>
+<p><b>时隙 ALOHA（slotted ALOHA）：</b></p>
+<ul>
+  <li>假设：等长帧、时间分等长时隙、<b>只在时隙开始时发送</b>、节点同步、冲突所有人可检测；</li>
+  <li>操作：新帧在<b>下一个时隙</b>发送；冲突则之后每个时隙<b>以概率 p 重传</b>直到成功；</li>
+  <li>冲突危险区缩小为 <b>1 个帧时</b>；</li>
+  <li>优点：单活动节点可全速发、高度去中心化（只需时隙同步）、简单；缺点：冲突浪费、空闲时隙、需要时钟同步；</li>
+  <li><b>效率：Np(1−p)<sup>N−1</sup>，N→∞ 时最大效率 = 1/e ≈ 37%</b> <span class="star">★</span>。</li>
+</ul>
+
+<h3>2.5 随机接入：CSMA 与 CSMA/CD <span class="star">★核心必考</span></h3>
+<p><b>CSMA（载波侦听多址）</b>：<b>发送前先听</b>（"别打断别人"）——信道空闲才发，忙则推迟。</p>
+<ul>
+  <li><span class="star">★</span>冲突仍会发生：<b>传播时延</b>使两个节点可能听不到对方刚开始的传输；冲突时整个分组传输时间被浪费；</li>
+  <li>三种坚持策略（课件补充）：<b>1-坚持</b>（忙则持续监听，一空闲立即发）、<b>非坚持</b>（忙则随机延时后再听）、<b>p-坚持</b>（用于分时隙信道，空闲时以概率 p 发送）。</li>
+</ul>
+<p><b>CSMA/CD（带冲突检测）</b>：边发边听，<b>检测到冲突立即中止</b>，减少信道浪费（"礼貌的对话者"）；有线易实现、无线难。</p>
+<p><b>以太网 CSMA/CD 算法</b> <span class="star">★必背五步</span>：</p>
+<ol>
+  <li>NIC 收到数据报，创建帧；</li>
+  <li>侦听：空闲 → 发送；忙 → 等到空闲再发；</li>
+  <li>发送完整帧且无冲突 → 完成；</li>
+  <li>发送中检测到冲突 → <b>中止，发送阻塞（jam）信号</b>；</li>
+  <li>中止后<b>二进制指数退避</b>：第 m 次冲突后从 {0,1,…,2<sup>m</sup>−1} 随机选 K，<b>等待 K·512 比特时间</b>回到第 2 步——冲突越多，退避越久。</li>
+</ol>
+<ul>
+  <li>冲突检测方法（课件补充）：信号电平法、过零点检测法、自收自发比较法；</li>
+  <li><span class="star">★</span>时隙长度：发送后经过 <b>2τ</b>（τ 为单程最大传播时延）没冲突即成功（1 km 同轴 τ≈5μs，2τ≈10μs）。</li>
+</ul>
+<div class="formula">CSMA/CD 效率 = 1 ÷ (1 + 5·t<sub>prop</sub>/t<sub>trans</sub>)</div>
+<p>t<sub>prop</sub>→0 或 t<sub>trans</sub>→∞ 时效率→1；比 ALOHA 好，且简单、廉价、去中心化。</p>
+
+<h3>2.6 无线场景与 CSMA/CA <span class="star">★</span></h3>
+<p><b>为什么无线不用 CSMA/CD</b>：① 边发边收成本太高；② 发送端检测不到接收端的冲突。</p>
+<ul>
+  <li><b>隐藏站问题</b> <span class="star">★</span>：A、C 互相听不到（超出无线电范围），同时向 B 发送 → 在 B 处冲突；</li>
+  <li><b>暴露站问题</b> <span class="star">★</span>：B 向 A 发送，C 听到 B 的信号就不敢向 D 发——其实并不会冲突。</li>
+</ul>
+<p><b>CSMA/CA（冲突避免，802.11 用）</b> <span class="star">★</span>：</p>
+<ul>
+  <li>发送前监听：忙 → 二进制指数退避后继续监听，空闲再发；</li>
+  <li>发送前要等<b>帧间间隔（IFS）</b>+ 退避时间；</li>
+  <li><b>发送后不做冲突检测</b>，靠接收方回 <b>ACK</b> 确认；没收到 ACK 判定丢失，再退避重传；</li>
+  <li>与以太网区别：第 i 次退避从 2<sup>2+i</sup> 个时隙中随机选。</li>
+</ul>
+
+<h3>2.7 轮流协议 <span class="star">★</span></h3>
+<ul>
+  <li>动机：信道划分<b>高负载好低负载差</b>；随机接入<b>低负载好高负载冲突多</b>；轮流协议"两全其美"；</li>
+  <li><b>轮询（polling）</b>：主节点逐个"邀请"从节点发送；问题：轮询开销、延迟、<b>主节点单点故障</b>；</li>
+  <li><b>令牌传递（token passing）</b>：控制令牌依次传递，拿到令牌才能发；问题：令牌开销、延迟、<b>令牌丢失单点故障</b>（蓝牙、FDDI、令牌环使用）；</li>
+  <li>实例：电缆接入网 <b>DOCSIS</b>——下行 FDM 广播；上行部分时隙分配（TDM）、部分<b>随机接入竞争</b>（二进制退避）——三类方法的混合体。</li>
+</ul>
+
+<h2 id="s3">三、局域网（LAN）</h2>
+
+<h3>3.1 MAC 地址 <span class="star">★必背</span></h3>
+<ul>
+  <li><b>48 位</b>（6 字节），固化在网卡 ROM（也可软件设置），十六进制表示，如 <code>1A-2F-BB-76-09-AD</code>；</li>
+  <li>作用：在<b>同一子网内</b>把帧从一个接口送到另一个物理相邻接口（"本地"传输）；</li>
+  <li>分配由 <b>IEEE</b> 管理，厂商购买地址块保证唯一；</li>
+  <li>类比 <span class="star">★</span>：<b>MAC 地址像身份证号</b>（跟人走，扁平、可移植——换 LAN 不变）；<b>IP 地址像邮政地址</b>（跟位置走，层次化、不可移植——取决于所在子网）；</li>
+  <li>广播地址：<b>FF-FF-FF-FF-FF-FF</b>。</li>
+</ul>
+
+<h3>3.2 ARP（地址解析协议）<span class="star">★必考流程</span></h3>
+<p>问题：知道目标的 <b>IP 地址</b>，如何查它的 <b>MAC 地址</b>？</p>
+<ul>
+  <li>每个 IP 节点有 <b>ARP 表</b>：&lt;IP 地址; MAC 地址; TTL&gt;（TTL 通常 <b>20 分钟</b>）；</li>
+  <li>流程（A 想发给同网段的 B）<span class="star">★三步</span>：
+    <ol>
+      <li>B 不在 A 的 ARP 表 → A <b>广播 ARP 查询</b>（目的 MAC = FF-FF-FF-FF-FF-FF，含 B 的 IP），全网段都收到；</li>
+      <li><b>B 单播 ARP 应答</b>给 A（封装在普通以太网帧中，目的 MAC = A），告知自己的 MAC；</li>
+      <li>A 把 B 的条目存入 ARP 表。</li>
+    </ol>
+  </li>
+</ul>
+
+<h3>3.3 跨子网发送：IP 地址与 MAC 地址配合 <span class="star">★经典必考</span></h3>
+<p>场景：A（111.111.111.111）经路由器 R 发给另一子网的 B（222.222.222.222）：</p>
+<ol>
+  <li>A 创建 IP 数据报：<b>源 IP=A，目的 IP=B（始终不变）</b>；</li>
+  <li>A 创建链路层帧：<b>目的 MAC = R 的（左）接口 MAC</b>（用 ARP 查），装入数据报；</li>
+  <li>帧到 R：R 解封装取出数据报上交 IP 层；</li>
+  <li>R 查转发表确定出接口，重新封装：<b>源 MAC = R 的（右）接口 MAC，目的 MAC = B 的 MAC</b>；IP 源/目的<b>不变</b>；</li>
+  <li>B 收到帧，解封装上交 IP 层。</li>
+</ol>
+<div class="formula">IP 地址端到端不变，MAC 地址逐跳更换</div>
+
+<h3>3.4 以太网 <span class="star">★必背</span></h3>
+<ul>
+  <li>"主导"的有线局域网技术：最早广泛使用、简单便宜、速度从 10 Mbps 到 400 Gbps；</li>
+  <li>物理拓扑：
+    <ul>
+      <li><b>总线型</b>（90 年代）：同轴电缆，所有节点<b>同一冲突域</b>；</li>
+      <li><b>交换式</b>（现在）：中心是交换机，每条链路独立跑以太网协议，<b>节点间不冲突</b>。</li>
+    </ul>
+  </li>
+</ul>
+<p><b>以太网帧结构</b> <span class="star">★必背字段</span>：</p>
+<pre><code>| 前同步码 | 目的 MAC | 源 MAC | 类型 | 数据(payload) | CRC |</code></pre>
+<ul>
+  <li><b>前同步码（preamble）</b>：7 字节 10101010 + 1 字节 10101011，用于<b>同步收发双方时钟</b>；</li>
+  <li><b>地址</b>：6 字节源/目的 MAC；目的地址匹配或广播才上交，否则丢弃；</li>
+  <li><b>类型（type）</b>：指示上层协议（通常 IP），用于<b>解复用</b>；</li>
+  <li><b>CRC</b>：接收方校验，错误则丢帧。</li>
+</ul>
+<p><b>以太网特性</b> <span class="star">★必考</span>：</p>
+<ul>
+  <li><b>无连接</b>：收发网卡间无握手；</li>
+  <li><b>不可靠</b>：接收网卡<b>不发 ACK/NAK</b>，坏帧直接丢弃——靠上层（如 TCP）恢复，否则数据就丢了；</li>
+  <li>MAC 协议：<b>非时隙 CSMA/CD + 二进制退避</b>；</li>
+  <li>802.3 标准家族：<b>MAC 协议和帧格式相同</b>，速率和物理介质不同（双绞线/光纤）。</li>
+</ul>
+
+<h3>3.5 以太网交换机 <span class="star">★必考</span></h3>
+<ul>
+  <li><b>链路层设备</b>：<b>存储转发</b>以太网帧，检查帧的 MAC 地址<b>选择性转发</b>；</li>
+  <li><b>透明</b>：主机感知不到交换机存在；<b>即插即用、自学习</b>：无需配置；</li>
+  <li>每条链路专用、无冲突、全双工，<b>A→A' 和 B→B' 可同时传输</b>（但 A→A' 与 C→A' 不能同时——目的端口争用）。</li>
+</ul>
+<p><b>交换表与自学习</b> <span class="star">★必背</span>：</p>
+<ul>
+  <li>表项：<b>(MAC 地址, 到达该主机的接口, 时间戳)</b>；</li>
+  <li><b>自学习</b>：收到帧时记下（<b>源 MAC</b> → 进入的接口）。</li>
+</ul>
+<p><b>过滤/转发算法</b> <span class="star">★</span>：</p>
+<ol>
+  <li>记录传入链路和源 MAC；</li>
+  <li>用<b>目的 MAC</b> 查表；</li>
+  <li>找到条目：若目的就在帧到达的网段 → <b>丢弃（过滤）</b>；否则 → 从条目指示的接口<b>转发</b>；</li>
+  <li>没找到 → <b>泛洪</b>（除来口外的所有接口）。</li>
+</ol>
+<p>多台交换机互连：同样靠自学习，无需额外协议。</p>
+<p><b>交换机 vs 路由器</b> <span class="star">★必考对比</span>：</p>
+<table>
+  <tr><th></th><th>交换机</th><th>路由器</th></tr>
+  <tr><td>层次</td><td><b>链路层</b>设备（看帧头）</td><td><b>网络层</b>设备（看 IP 头）</td></tr>
+  <tr><td>转发表</td><td><b>自学习/泛洪</b>获得，按 <b>MAC</b> 转发</td><td><b>路由算法</b>计算，按 <b>IP</b> 转发</td></tr>
+  <tr><td>共同点</td><td colspan="2">都是存储转发，都有转发表</td></tr>
+</table>
+
+<h3>3.6 虚拟局域网（VLAN）<span class="star">★</span></h3>
+<p><b>动机</b>：单一广播域的问题——① <b>扩展性</b>：所有二层广播（ARP、DHCP、未知 MAC）要传遍整个 LAN；② 效率、安全、隐私；③ 管理：用户换楼但想留在原逻辑网络。</p>
+<p><b>基于端口的 VLAN</b> <span class="star">★</span>：</p>
+<ul>
+  <li>支持 VLAN 的交换机可在<b>一台物理交换机</b>上定义<b>多个虚拟局域网</b>（如端口 1-8 = EE，9-15 = CS）；</li>
+  <li><b>流量隔离</b>：1-8 端口的帧只能到达 1-8——广播域被隔开；</li>
+  <li>划分方式（课件补充）：按<b>端口</b>（静态）、按 <b>MAC 地址</b>（动态）、按 <b>IP 地址</b>（动态）；</li>
+  <li><b>VLAN 间转发要靠路由</b>（就像两台独立交换机之间）；实际设备常是交换机+路由器一体；</li>
+  <li>VLAN 优点：便于管理虚拟工作组、安全（不同 VLAN 不能互相监听）、<b>避免广播风暴</b>、减少物理搬动。</li>
+</ul>
+<p><b>跨交换机的 VLAN：802.1Q 与中继端口</b> <span class="star">★</span>：</p>
+<ul>
+  <li><b>中继端口（trunk port）</b>：在多台物理交换机之间传送<b>各 VLAN</b> 的帧；</li>
+  <li>帧必须带 <b>VLAN ID</b> → <b>802.1Q</b> 帧 = 普通以太帧插入 4 字节标签（2 字节标签协议标识符 0x8100 + <b>12 位 VLAN ID</b> + 3 位优先级），并<b>重算 CRC</b>。</li>
+</ul>
+
+<h3>3.7 MPLS 与数据中心网络（了解）</h3>
+<ul>
+  <li><b>MPLS（多协议标签交换）</b>：用<b>固定长度标签</b>（而非最长前缀匹配）高速转发；标签交换路由器只看标签不看 IP；可做<b>流量工程</b>（同目的不同源走不同路）和<b>快速重路由</b>（预算备份路径）；MPLS 头插在以太帧头和 IP 头之间；</li>
+  <li><b>数据中心网络</b>：机架（20-40 刀片服务器）+ <b>TOR（机架顶部）交换机</b> + 二级/一级交换机 + 边界路由器；<b>多路径</b>冗余互联提高吞吐和可靠性；<b>负载均衡器</b>做应用层路由；协议创新：RoCE、DCTCP（ECN）、SDN；</li>
+  <li><b>一个网页请求的一天</b>（综合复习线索）<span class="star">★</span>：笔记本入网 → <b>DHCP</b>（拿 IP/网关/DNS）→ <b>ARP</b>（查网关 MAC）→ <b>DNS</b>（查 www.google.com 的 IP，UDP）→ <b>TCP 三次握手</b> → <b>HTTP</b> 请求/响应 → 网页显示——把全书协议串成一条线。</li>
+</ul>
+
+<h2 id="s4">四、易考点速记表</h2>
+
+<h3>4.1 关键公式与数字</h3>
+<table>
+  <tr><th>项目</th><th>内容</th></tr>
+  <tr><td>CRC</td><td>R = remainder(D·2<sup>r</sup> ÷ G)，模 2 除法；可检 &lt;r+1 位突发错误</td></tr>
+  <tr><td>纯 ALOHA 效率</td><td><b>1/(2e) ≈ 18%</b>，冲突危险区 2 个帧时</td></tr>
+  <tr><td>时隙 ALOHA 效率</td><td><b>1/e ≈ 37%</b>，冲突危险区 1 个帧时</td></tr>
+  <tr><td>CSMA/CD 效率</td><td>1 ÷ (1 + 5·t<sub>prop</sub>/t<sub>trans</sub>)</td></tr>
+  <tr><td>二进制指数退避</td><td>第 m 次冲突：从 {0,…,2<sup>m</sup>−1} 选 K，等 K·512 比特时间</td></tr>
+  <tr><td>冲突检测窗口</td><td>2τ（1 km 同轴电缆 ≈ 10 μs）</td></tr>
+  <tr><td>MAC 地址</td><td>48 位 / 6 字节，十六进制</td></tr>
+  <tr><td>广播 MAC</td><td>FF-FF-FF-FF-FF-FF</td></tr>
+  <tr><td>ARP 表 TTL</td><td>约 20 分钟</td></tr>
+  <tr><td>前同步码</td><td>7 字节 10101010 + 1 字节 10101011</td></tr>
+  <tr><td>802.1Q 标签</td><td>4 字节（含 12 位 VLAN ID）</td></tr>
+</table>
+
+<h3>4.2 名词中英对照</h3>
+<table>
+  <tr><th>中文</th><th>英文</th></tr>
+  <tr><td>帧</td><td>frame</td></tr>
+  <tr><td>网卡</td><td>NIC (network interface card)</td></tr>
+  <tr><td>差错检测与纠正</td><td>error detection and correction (EDC)</td></tr>
+  <tr><td>奇偶校验</td><td>parity check</td></tr>
+  <tr><td>循环冗余校验</td><td>CRC (cyclic redundancy check)</td></tr>
+  <tr><td>多址接入协议</td><td>multiple access protocol</td></tr>
+  <tr><td>时分/频分多址</td><td>TDMA / FDMA</td></tr>
+  <tr><td>载波侦听多址</td><td>CSMA (carrier sense multiple access)</td></tr>
+  <tr><td>冲突检测 / 冲突避免</td><td>CD (collision detection) / CA (collision avoidance)</td></tr>
+  <tr><td>二进制指数退避</td><td>binary exponential backoff</td></tr>
+  <tr><td>隐藏站 / 暴露站</td><td>hidden / exposed terminal</td></tr>
+  <tr><td>轮询 / 令牌传递</td><td>polling / token passing</td></tr>
+  <tr><td>地址解析协议</td><td>ARP (Address Resolution Protocol)</td></tr>
+  <tr><td>交换机 / 自学习</td><td>switch / self-learning</td></tr>
+  <tr><td>泛洪</td><td>flooding</td></tr>
+  <tr><td>虚拟局域网</td><td>VLAN</td></tr>
+  <tr><td>中继端口</td><td>trunk port</td></tr>
+  <tr><td>多协议标签交换</td><td>MPLS</td></tr>
+  <tr><td>机架顶部交换机</td><td>TOR (top of rack) switch</td></tr>
+</table>
+
+<h3>4.3 易混概念辨析</h3>
+<table>
+  <tr><th>概念对</th><th>区别一句话</th></tr>
+  <tr><td>检错 vs 纠错</td><td>检错：发现有错（重传或丢弃）；纠错：直接定位并改正（如二维奇偶校验纠单比特错）</td></tr>
+  <tr><td>单比特奇偶 vs 二维奇偶</td><td>单比特：只能检奇数个错；二维：能<b>检并纠</b>单比特错</td></tr>
+  <tr><td>校验和 vs CRC</td><td>校验和：16 位反码和，软件易实现但弱；CRC：模 2 除法，强，用于以太网/WiFi</td></tr>
+  <tr><td>纯 ALOHA vs 时隙 ALOHA</td><td>纯：随到随发，危险区 2 帧时，18%；时隙：等时隙开头发，危险区 1 帧时，37%</td></tr>
+  <tr><td>CSMA vs CSMA/CD vs CSMA/CA</td><td>CSMA：先听后发；/CD：边发边听、冲突即停（有线以太网）；/CA：避免冲突+ACK 确认（无线 802.11）</td></tr>
+  <tr><td>为什么无线不用 CD</td><td>边发边收代价大 + 发送端检测不到接收端的冲突（隐藏站）</td></tr>
+  <tr><td>隐藏站 vs 暴露站</td><td>隐藏站：互相听不见 → 该让不让（冲突）；暴露站：听见了不相干的 → 该发不发（浪费）</td></tr>
+  <tr><td>MAC 地址 vs IP 地址</td><td>MAC：48 位、扁平、可移植、链路层逐跳用；IP：32 位、层次化、随子网变、端到端不变</td></tr>
+  <tr><td>ARP vs DNS</td><td>ARP：IP → MAC（子网内广播查询）；DNS：域名 → IP（全球分布式数据库）</td></tr>
+  <tr><td>交换机 vs 路由器</td><td>交换机：二层、看 MAC、自学习泛洪；路由器：三层、看 IP、路由算法</td></tr>
+  <tr><td>过滤 vs 转发 vs 泛洪</td><td>过滤：目的就在来的网段→丢；转发：查表定向发；泛洪：查不到→除来口全发</td></tr>
+  <tr><td>总线以太网 vs 交换式以太网</td><td>总线：一个冲突域、CSMA/CD；交换式：每链路独立冲突域、可同时多对传输</td></tr>
+  <tr><td>VLAN 内 vs VLAN 间</td><td>VLAN 内：二层交换；VLAN 间：必须经<b>路由器</b>（三层）</td></tr>
+</table>
+
+<h3>4.4 一句话带过（非重点，了解即可）</h3>
+<ul>
+  <li><b>MPLS</b>：固定标签快速转发，支持流量工程与快速重路由。</li>
+  <li><b>数据中心网络</b>：TOR/多级交换/多路径/负载均衡器；RoCE、DCTCP、SDN。</li>
+  <li><b>DOCSIS</b>：电缆网混合使用 FDM + TDM + 随机接入。</li>
+  <li><b>蜂窝标准演进</b>：1G 模拟语音 → 2G 数字（GSM）→ 3G → 4G → 5G（高速率低时延大连接）→ 6G（星地融合）。</li>
+  <li><b>"网页请求的一天"</b>：DHCP → ARP → DNS → TCP 握手 → HTTP，是把全书串起来的复习主线。</li>
+</ul>
+
+<footer>计算机网络 第六章复习提纲 · 基于 Kurose &amp; Ross 第 8 版课件整理</footer>
+
+</div>
+</body>
+</html>
